@@ -20,20 +20,18 @@ async def recherche(q: str, tri: str = None, ordre: str = "asc"):
     for livre in docs:
         annee = livre.get("first_publish_year")
 
-        if annee is not None and annee >= 2025 and annee <= annee_courante:
+        if annee is not None and annee >= 2024 and annee <= annee_courante:
             livres.append({
                 "titre": livre.get("title"),
                 "auteurs": livre.get("author_name"),
                 "annee": annee
             })
 
-    decroissant = (ordre == "desc")
-
     if tri == "titre":
-        livres = sorted(livres, key=lambda livre: livre["titre"] or "", reverse=decroissant)
+        livres = sorted(livres, key=lambda livre: livre["titre"] or "")
     elif tri == "annee":
-        livres = sorted(livres, key=lambda livre: livre["annee"], reverse=decroissant)
+        livres = sorted(livres, key=lambda livre: livre["annee"])
     elif tri == "auteur":
-        livres = sorted(livres, key=lambda livre: livre["auteurs"][0] if livre["auteurs"] else "", reverse=decroissant)
+        livres = sorted(livres, key=lambda livre: livre["auteurs"][0] if livre["auteurs"] else "")
 
     return livres
